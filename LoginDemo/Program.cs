@@ -8,10 +8,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                               .AddCookie(options =>
                               {
-                                  // 以下這兩個設定可有可無
-                                  options.AccessDeniedPath = "/Home/AccessDeny";   // 拒絕，不允許登入，會跳到這一頁。
+                                  options.AccessDeniedPath = "/Home/AccessDeny";
                                   options.LoginPath = "/Home/Index";
                               });
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;    // 限制只有在 HTTPS 連線的情況下，才允許使用 Session。
+    options.Cookie.Name = "Lalala";                             // 預設 Session 名稱 .AspNetCore.Session 可以改掉。
+    options.IdleTimeout = TimeSpan.FromMinutes(20);             // 預設是 20分鐘，可修改
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,12 +34,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-#region LogingCookie 
-app.UseAuthentication();
-// 驗證，設定 HttpContext.User 屬性，並針對要求執行授權中介軟體。
-#endregion
-
-app.UseAuthorization();
+app.UseAuthentication();    // 驗證
+app.UseAuthorization();     // 授權
+app.UseSession();           // Session
 
 app.MapControllerRoute(
     name: "default",
