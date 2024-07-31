@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,14 +8,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                               .AddCookie(options =>
                               {
-                                  options.AccessDeniedPath = "/AccessAccount/AccessDeny";
+                                  options.AccessDeniedPath = "/Home/AccessDeny";
                                   options.LoginPath = "/Home/Index";
                               });
 
 builder.Services.AddSession(options =>
 {
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;    // 限制只有在 HTTPS 連線的情況下，才允許使用 Session。
-    //options.Cookie.Name = "Lalala";                           // 預設 Session 名稱 .AspNetCore.Session 可以改掉。
+    options.Cookie.Name = "Lalala";                             // 預設 Session 名稱 .AspNetCore.Session 可以改掉。
     options.IdleTimeout = TimeSpan.FromMinutes(20);             // 預設是 20分鐘，可修改
 });
 

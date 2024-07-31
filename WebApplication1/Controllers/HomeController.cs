@@ -1,4 +1,8 @@
-namespace LoginDemo.Controllers
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
@@ -11,28 +15,13 @@ namespace LoginDemo.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-        [Authorize/*(Roles = "1,2")*/]
-        public IActionResult Index2()
-        {
-            string str = "";
-
-            ClaimsPrincipal principal = (ClaimsPrincipal)HttpContext.User;
-            if (principal != null)
-            {
-                foreach (Claim claim in principal.Claims)
-                {
-                    str += "CLAIM TYPE: " + claim.Type + ";<br>" + "CLAIM VALUE: " + claim.Value + "<br>";
-                }
-            }
-
-            ViewBag.Str = str;
+            HttpContext.Session.SetString("Ok", "ddddd");
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.Message = HttpContext.Session.GetString("Ok"); ;
             return View();
         }
 

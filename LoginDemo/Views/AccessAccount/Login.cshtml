@@ -1,0 +1,37 @@
+﻿@model LoginDemo.Models.UserTable
+
+@{
+    ViewData["Title"] = "Login";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<h1>Login</h1>
+<hr />
+<form asp-action="Login">
+    <div class="form-horizontal">
+        <div class="mb-3">
+            <label class="form-label" for="UserName">使用者</label>
+            <input class="form-control text-box single-line" placeholder="Enter Username" data-val="true"
+                   data-val-required="The UserName field is required." id="UserName" name="UserName" type="text" value="" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="UserPassword">密碼</label>
+            <input class="form-control text-box single-line" placeholder="Enter Password" data-val="true"
+                   data-val-required="The UserPassword field is required." id="UserPassword" name="UserPassword" type="password" value="" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="UserPassword" data-valmsg-replace="true"></span>
+        </div>
+
+        <input type="submit" value="登入 Login" class="btn btn-outline-primary" />
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <br>
+        <h3 class="alert alert-danger">@ViewBag.ErrorMessage</h3>
+    }
+</form>
