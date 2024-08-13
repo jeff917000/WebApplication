@@ -5,8 +5,8 @@ namespace LoginDemo.Utilities
 {
     public class Encryption_Library
     {
-        byte[] key = Encoding.UTF8.GetBytes("KSUhBxWEwTpaCgufq8tFP7Zpzz82eWWv");
-        byte[] iv = Encoding.UTF8.GetBytes("ELPM46628PRVKFB4");
+        readonly private byte[] key = Encoding.UTF8.GetBytes("KSUhBxWEwTpaCgufq8tFP7Zpzz82eWWv");
+        readonly private byte[] iv = Encoding.UTF8.GetBytes("ELPM46628PRVKFB4");
         public string AesEncrypt(string str)
         {
             byte[] encrypted;
